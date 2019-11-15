@@ -1,25 +1,27 @@
 #include<iostream>
 #include<stdio.h>
 #include<string.h>
+#include <vector>
 
 using namespace std;
 
 int i,j,ganador;
-char gato[3][3]={' ',' ',' ',' ',' ',' ',' ',' ',' ',};
 
-bool mifunc(char array[3][3]){
+//char gato[3][3]={' ',' ',' ',' ',' ',' ',' ',' ',' ',};
+
+bool mifunc(vector< vector<char> > array,int n){
 	char aux;
 	int j = 0;
-	for(int i =0;i<3;i++){
+	for(int i =0;i<n;i++){
 		aux = array[i][j];
-		for(j =0;j<3;j++){
+		for(j =0;j<n;j++){
 			if(aux==array[i][j]&&array[i][j]!=' '){
 				aux==array[i][j];
 			}
 			else{
 				break;
 			}
-			if(j==2) return true;
+			if(j==n-1) return true;
 		}
 		j = 0;
 	}
@@ -28,12 +30,12 @@ bool mifunc(char array[3][3]){
 	return false;
 }
 
-void imprimir_gato(char gato[3][3]){
+void imprimir_gato(vector< vector<char> > gato,int n){
 	
 	cout<<"__________________\n";
-	for(int i=0;i<3;i++){
+	for(int i=0;i<n;i++){
 		
-		for(int j=0;j<3;j++){
+		for(int j=0;j<n;j++){
 		
 		cout<<"|"<<gato[i][j]<<"|";
 		
@@ -68,14 +70,16 @@ int quien_gana(char gato[3][3]){
 }
 
 int main(){
+	int n;
 	int k=1,fila,columna,opcion;
-	
+	cin >> n;
+	vector<vector<char>> gato(n,vector<char>(n,' '));
 	
 	cout<<"      EL JUEGO DE EL GATO (X/0)\n";
 	do{
 		cout<<"El ganador es el que complete primero una linea en: Fila, Columna, Diagonal\n";
 		cout<<"Tablero del juego\n";
-		imprimir_gato(gato);
+		imprimir_gato(gato,n);
 		do{
 		cout<<"Ronda numero: "<<k<<endl;
 		if(k%2 != 0){
@@ -85,16 +89,16 @@ int main(){
 					cout<<"\nIngrese las coordenadas de la casilla que desea: ";
 					cin>>fila;
 					cin>>columna;
-					if (fila>3 ||columna>3){
+					if (fila>n ||columna>n){
 						cout<<"\nError en la cordenada";
 					}	
 				}
-			while(fila>3 ||columna>3);
+			while(fila>n ||columna>n);
 			}
 			while (gato[fila-1][columna-1]!=' ');
 			gato[fila-1][columna-1]='X';
-			imprimir_gato(gato);
-			mifunc(gato);
+			imprimir_gato(gato,n);
+			mifunc(gato,n);
 		}
 		if (k%2 == 0){
 			do{
@@ -103,17 +107,17 @@ int main(){
 			cout<<"\nIngrese las coordenadas de la casilla que desea: ";
 			cin>>fila;
 			cin>>columna;
-			if(fila>3 ||columna>3){
+			if(fila>n ||columna>n){
 				cout<<"\nError en la coordenada";
 			}
 			}
-			while (fila>3||columna>3);
+			while (fila>n||columna>n);
 			}
 			while(gato[fila-1][columna-1]!=' ');
 			gato[fila-1][columna-1]='O';
-			imprimir_gato(gato);
-			mifunc(gato);
-			cout << mifunc(gato);
+			imprimir_gato(gato,n);
+			mifunc(gato,n);
+			cout << mifunc(gato,n);
 		}
 		k=k+1;
 		}
@@ -137,6 +141,5 @@ int main(){
 	}
 	}
 	while(opcion==1);
-	
 	return 0;
 }
